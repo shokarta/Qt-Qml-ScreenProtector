@@ -58,22 +58,7 @@ int main(int argc, char *argv[])
 		QApplication::setQuitOnLastWindowClosed(false);
 
 
-	TrayManager trayManager;
-		trayManager.show();
-
-	OverlayController overlayManager;
-
-	HotkeyManager hotkeyManager;
-		hotkeyManager.registerHotkey(MOD_ALT,				'Q',		[&overlayManager]() { overlayManager.toggle(); });		// ALT + Q
-		hotkeyManager.registerHotkey(MOD_CONTROL,			'Q',		[&overlayManager]() { overlayManager.toggle(); });		// CTRL + Q
-		hotkeyManager.registerHotkey(MOD_CONTROL | MOD_ALT,	'Q',		[&overlayManager]() { overlayManager.toggle(); });		// CTRL + ALT + Q
-		hotkeyManager.registerHotkey(MOD_ALT,				VK_OEM_3,	[&overlayManager]() { overlayManager.toggle(); });		// ALT + ~
-		hotkeyManager.registerHotkey(MOD_CONTROL,			VK_OEM_3,	[&overlayManager]() { overlayManager.toggle(); });		// CTRL + ~
-		hotkeyManager.registerHotkey(MOD_CONTROL | MOD_ALT,	VK_OEM_3,	[&overlayManager]() { overlayManager.toggle(); });		// CTRL + ALT + ~
-
-
 	QQmlApplicationEngine engine;
-		engine.rootContext()->setContextProperty("overlayController", &overlayManager);
 		engine.loadFromModule(QString(APP_URI), "Main");
 
 
@@ -86,6 +71,26 @@ int main(int argc, char *argv[])
 	else {
 qWarning() << "Laptop screen not found !!!";
 	}
+
+
+	TrayManager trayManager;
+		trayManager.show();
+
+	OverlayController overlayManager;
+		overlayManager.setWindow(window);
+		overlayManager.setScreen(screen);
+
+	HotkeyManager hotkeyManager;
+		bool visible = false;
+		hotkeyManager.registerHotkey(MOD_ALT,				'Q',		[&overlayManager]() { overlayManager.toggle(); });		// ALT + Q
+		hotkeyManager.registerHotkey(MOD_CONTROL,			'Q',		[&overlayManager]() { overlayManager.toggle(); });		// CTRL + Q
+		hotkeyManager.registerHotkey(MOD_CONTROL | MOD_ALT,	'Q',		[&overlayManager]() { overlayManager.toggle(); });		// CTRL + ALT + Q
+		hotkeyManager.registerHotkey(MOD_ALT,				VK_OEM_3,	[&overlayManager]() { overlayManager.toggle(); });		// ALT + ~
+		hotkeyManager.registerHotkey(MOD_CONTROL,			VK_OEM_3,	[&overlayManager]() { overlayManager.toggle(); });		// CTRL + ~
+		hotkeyManager.registerHotkey(MOD_CONTROL | MOD_ALT,	VK_OEM_3,	[&overlayManager]() { overlayManager.toggle(); });		// CTRL + ALT + ~
+
+
+	engine.rootContext()->setContextProperty("overlayController", &overlayManager);
 
 
 	return app.exec();

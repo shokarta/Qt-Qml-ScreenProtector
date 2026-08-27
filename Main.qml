@@ -6,6 +6,7 @@ Window {
     id: root
 
     visible: overlayController.visible
+    //visibility: overlayController.visible ? Window.FullScreen : Window.Hidden           // helps to show windows as TOPMOST
 
     flags: Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.Tool
 
