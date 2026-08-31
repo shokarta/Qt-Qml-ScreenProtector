@@ -89,14 +89,14 @@ target_sources(
 )
 
 
-	add_custom_command(TARGET ${TARGET_NAME}
-		POST_BUILD
-		COMMAND
-			C:/Qt/${QT_VERSION}/msvc2022_64/bin/windeployqt.exe
-			--qmldir "${CMAKE_CURRENT_SOURCE_DIR}"
-			"$<TARGET_FILE:${TARGET_NAME}>"
-		COMMENT "Running windeployqt"
-	)
+	#add_custom_command(TARGET ${TARGET_NAME}
+	#	POST_BUILD
+	#	COMMAND
+	#		C:/Qt/${QT_VERSION}/msvc2022_64/bin/windeployqt.exe
+	#		--qmldir "${CMAKE_CURRENT_SOURCE_DIR}"
+	#		"$<TARGET_FILE:${TARGET_NAME}>"
+	#	COMMENT "Running windeployqt"
+	#)
 
 include(GNUInstallDirs)
 install(TARGETS ${TARGET_NAME}
