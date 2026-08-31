@@ -5,7 +5,8 @@ import QtQuick.Window
 Window {
     id: root
 
-    visible: overlayController.visible
+    visible: false
+    //visible: overlayController.visible
     //visibility: overlayController.visible ? Window.FullScreen : Window.Hidden           // helps to show windows as TOPMOST
 
     flags: Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.Tool

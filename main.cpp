@@ -59,7 +59,14 @@ int main(int argc, char *argv[])
 
 
 	QQmlApplicationEngine engine;
-		engine.loadFromModule(QString(APP_URI), "Main");
+		QObject::connect(&engine, &QQmlApplicationEngine::objectCreationFailed, &app, []() { QCoreApplication::exit(-1); }, Qt::QueuedConnection);
+
+
+	OverlayController overlayManager;
+
+	engine.rootContext()->setContextProperty("overlayController", &overlayManager);
+
+	engine.loadFromModule(QString(APP_URI), "Main");
 
 
 	auto *window = qobject_cast<QQuickWindow *>(engine.rootObjects().constFirst());
@@ -73,12 +80,11 @@ qWarning() << "Laptop screen not found !!!";
 	}
 
 
+	overlayManager.setWindow(window);
+	overlayManager.setScreenProvider([]() { return findLaptopScreen(); });
+
 	TrayManager trayManager;
 		trayManager.show();
-
-	OverlayController overlayManager;
-		overlayManager.setWindow(window);
-		overlayManager.setScreen(screen);
 
 	HotkeyManager hotkeyManager;
 		bool visible = false;
@@ -90,7 +96,7 @@ qWarning() << "Laptop screen not found !!!";
 		hotkeyManager.registerHotkey(MOD_CONTROL | MOD_ALT,	VK_OEM_3,	[&overlayManager]() { overlayManager.toggle(); });		// CTRL + ALT + ~
 
 
-	engine.rootContext()->setContextProperty("overlayController", &overlayManager);
+
 
 
 	return app.exec();
