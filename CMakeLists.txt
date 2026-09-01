@@ -25,10 +25,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
 find_package(QT NAMES Qt6)		# load Qt CMake Variables (ie: QT_VERSION_MAJOR etc)
-find_package(Qt6 REQUIRED COMPONENTS Quick)
-find_package(Qt6 REQUIRED COMPONENTS Core)
-find_package(Qt6 REQUIRED COMPONENTS Gui)
-find_package(Qt6 REQUIRED COMPONENTS Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Quick)					# QQuickWindow
+find_package(Qt6 REQUIRED COMPONENTS Core)					# QAbstractNativeEventFilter
+find_package(Qt6 REQUIRED COMPONENTS Gui)					# QScreen
+find_package(Qt6 REQUIRED COMPONENTS Widgets)				# QApplication QSystemTrayIcon QMenu QStyle
 
 
 

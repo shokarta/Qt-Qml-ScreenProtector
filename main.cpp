@@ -1,5 +1,4 @@
 #include <QApplication>
-#include <QSystemTrayIcon>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QQuickWindow>
