@@ -7,7 +7,9 @@ Window {
 
     visible: false
 
-    flags: Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.Tool
+    flags: Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.Tool | Qt.WindowDoesNotAcceptFocus
+
+    onClosing: function(close) { close.accepted = false }
 
     color: "transparent"
 
