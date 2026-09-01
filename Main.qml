@@ -6,8 +6,6 @@ Window {
     id: root
 
     visible: false
-    //visible: overlayController.visible
-    //visibility: overlayController.visible ? Window.FullScreen : Window.Hidden           // helps to show windows as TOPMOST
 
     flags: Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.Tool
 
@@ -17,6 +15,6 @@ Window {
         anchors.fill: parent
         sourceSize: Qt.size(width, height)
         fillMode: Image.PreserveAspectCrop
-        source: "resources/screen.jpg"
+        source: "qrc:/" + APP_URI + "/resources/screen.jpg"
     }
 }

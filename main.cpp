@@ -59,14 +59,21 @@ int main(int argc, char *argv[])
 
 
 	QQmlApplicationEngine engine;
-		QObject::connect(&engine, &QQmlApplicationEngine::objectCreationFailed, &app, []() { QCoreApplication::exit(-1); }, Qt::QueuedConnection);
+		QObject::connect(&engine, &QQmlApplicationEngine::objectCreationFailed, &app, []() {
+			QCoreApplication::exit(-1);
+		},
+		Qt::QueuedConnection);
 
 
-	OverlayController overlayManager;
+	// APP_URI to QML
+	engine.rootContext()->setContextProperty("APP_URI", QString(APP_URI));
 
-	engine.rootContext()->setContextProperty("overlayController", &overlayManager);
 
-	engine.loadFromModule(QString(APP_URI), "Main");
+	// Overlay Controller
+	OverlayController overlayManager;			engine.rootContext()->setContextProperty("overlayController", &overlayManager);
+
+
+	engine.load(":/" + QString(APP_URI) + "/Main.qml");
 
 
 	auto *window = qobject_cast<QQuickWindow *>(engine.rootObjects().constFirst());
@@ -74,9 +81,6 @@ int main(int argc, char *argv[])
 	if (window && screen) {
 		window->setScreen(screen);
 		window->setGeometry(screen->geometry());
-	}
-	else {
-qWarning() << "Laptop screen not found !!!";
 	}
 
 
@@ -87,16 +91,12 @@ qWarning() << "Laptop screen not found !!!";
 		trayManager.show();
 
 	HotkeyManager hotkeyManager;
-		bool visible = false;
 		hotkeyManager.registerHotkey(MOD_ALT,				'Q',		[&overlayManager]() { overlayManager.toggle(); });		// ALT + Q
 		hotkeyManager.registerHotkey(MOD_CONTROL,			'Q',		[&overlayManager]() { overlayManager.toggle(); });		// CTRL + Q
 		hotkeyManager.registerHotkey(MOD_CONTROL | MOD_ALT,	'Q',		[&overlayManager]() { overlayManager.toggle(); });		// CTRL + ALT + Q
 		hotkeyManager.registerHotkey(MOD_ALT,				VK_OEM_3,	[&overlayManager]() { overlayManager.toggle(); });		// ALT + ~
 		hotkeyManager.registerHotkey(MOD_CONTROL,			VK_OEM_3,	[&overlayManager]() { overlayManager.toggle(); });		// CTRL + ~
 		hotkeyManager.registerHotkey(MOD_CONTROL | MOD_ALT,	VK_OEM_3,	[&overlayManager]() { overlayManager.toggle(); });		// CTRL + ALT + ~
-
-
-
 
 
 	return app.exec();

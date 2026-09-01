@@ -16,7 +16,7 @@ class TrayManager : public QObject
 	public:
 		explicit TrayManager(QObject *parent = nullptr) : QObject(parent)
 		{
-			m_tray.setIcon(QIcon(QString(APP_URI) + "/resources/app.ico"));
+			m_tray.setIcon(QIcon(":/" + QString(APP_URI) + "/resources/app.ico"));
 			m_tray.setToolTip("Screen Protector");
 
 			m_titleAction = m_menu.addAction("Screen Protector");																	m_titleAction->setEnabled(false);
